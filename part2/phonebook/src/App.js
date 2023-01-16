@@ -3,14 +3,20 @@ import { useEffect, useState } from "react";
 import Persons from "./components/persons";
 import PersonForm from "./components/personForm";
 import Filter from "./components/filter";
+import SuccessNotification from "./components/SuccessNotification";
+import ErrorNotification from "./components/ErrorNotification";
 
 import personService from "./services/persons";
+
+import "./index.css";
 
 const App = () => {
   const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
   const [searchText, setSearchText] = useState("");
+  const [successMessage, setSuccessMessage] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   useEffect(() => {
     personService.getAll().then((initialPersons) => setPersons(initialPersons));
@@ -34,6 +40,20 @@ const App = () => {
                 person.id !== returnedPerson.id ? person : returnedPerson
               )
             );
+          })
+          .then(() => {
+            setSuccessMessage(`Updated ${newName}`);
+            setTimeout(() => {
+              setSuccessMessage(null);
+            }, 5000);
+          })
+          .catch((error) => {
+            setErrorMessage(
+              `Information of ${newName} has already been removed from server`
+            );
+            setTimeout(() => {
+              setErrorMessage(null);
+            }, 5000);
           });
       }
     } else {
@@ -41,9 +61,17 @@ const App = () => {
         name: newName,
         number: newNumber,
       };
-      personService.create(personObject).then((returnedPerson) => {
-        setPersons(persons.concat(returnedPerson));
-      });
+      personService
+        .create(personObject)
+        .then((returnedPerson) => {
+          setPersons(persons.concat(returnedPerson));
+        })
+        .then(() => {
+          setSuccessMessage(`Added ${newName}`);
+          setTimeout(() => {
+            setSuccessMessage(null);
+          }, 5000);
+        });
     }
     setNewName("");
     setNewNumber("");
@@ -77,6 +105,8 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <SuccessNotification message={successMessage} />
+      <ErrorNotification message={errorMessage} />
       <Filter
         searchText={searchText}
         handleSearchTextChange={handleSearchTextChange}
