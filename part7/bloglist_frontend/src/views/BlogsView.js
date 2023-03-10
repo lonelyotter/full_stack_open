@@ -7,7 +7,7 @@ import { useRef, useEffect } from "react";
 
 import { initializeBlogs } from "../reducers/blogReducer";
 
-const HomeView = () => {
+const BlogsView = () => {
   const user = useSelector((state) => state.user);
   const blogFormRef = useRef();
   const dispatch = useDispatch();
@@ -26,4 +26,4 @@ const HomeView = () => {
   );
 };
 
-export default HomeView;
+export default BlogsView;

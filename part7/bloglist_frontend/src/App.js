@@ -5,15 +5,16 @@ import blogService from "./services/blogs";
 import loginService from "./services/login";
 
 import { setNotification } from "./reducers/notificationReducer";
-import { setUser, clearUser } from "./reducers/userReducer";
+import { setUser } from "./reducers/userReducer";
 
-import HomeView from "./views/HomeView";
+import BlogsView from "./views/BlogsView";
 import UsersView from "./views/UsersView";
 import UserView from "./views/UserView";
 import BlogView from "./views/BlogView";
 
 import Notification from "./components/Notification";
 import { Routes, Route } from "react-router-dom";
+import Navigation from "./components/Navigation";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -50,15 +51,9 @@ const App = () => {
     }
   };
 
-  const handleLogout = () => {
-    window.localStorage.removeItem("loggedBlogappUser");
-    dispatch(clearUser());
-  };
-
   if (user === null) {
     return (
       <div>
-        <Notification />
         <h2>log in to application</h2>
         <form onSubmit={handleLogin}>
           <div>
@@ -93,19 +88,16 @@ const App = () => {
     <div>
       <Notification />
 
-      <h2>blogs</h2>
+      <Navigation />
 
-      <p>{user.name} logged in</p>
-
-      <p>
-        <button onClick={handleLogout}>logout</button>
-      </p>
+      <h2>blog app</h2>
 
       <Routes>
         <Route path="/users/:id" element={<UserView />} />
         <Route path="/users" element={<UsersView />} />
         <Route path="/blogs/:id" element={<BlogView />} />
-        <Route path="/" element={<HomeView />} />
+        <Route path="/blogs" element={<BlogsView />} />
+        <Route path="/" element={<BlogsView />} />
       </Routes>
     </div>
   );
