@@ -40,19 +40,6 @@ export const createBlog = (object) => {
   };
 };
 
-export const likeBlog = (id) => {
-  return async (dispatch, getState) => {
-    const blogs = getState().blogs;
-    const blogToLike = blogs.find((blog) => blog.id === id);
-    const likedBlog = {
-      ...blogToLike,
-      likes: blogToLike.likes + 1,
-    };
-    const returnedBlog = await blogService.update(id, likedBlog);
-    dispatch(updateBlog(returnedBlog));
-  };
-};
-
 export const removeBlog = (id) => {
   return async (dispatch) => {
     await blogService.remove(id);
