@@ -3,8 +3,11 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 
-import { initializeBlogDetail } from "../reducers/blogDetailReducer";
-import { likeBlog } from "../reducers/blogDetailReducer";
+import {
+  initializeBlogDetail,
+  likeBlog,
+  addComment,
+} from "../reducers/blogDetailReducer";
 
 const BlogView = () => {
   const id = useParams().id;
@@ -18,6 +21,13 @@ const BlogView = () => {
   const like = (e) => {
     e.preventDefault();
     dispatch(likeBlog(id));
+  };
+
+  const comment = (e) => {
+    e.preventDefault();
+    const comment = e.target.comment.value;
+    dispatch(addComment(id, comment));
+    e.target.reset();
   };
 
   if (!blog) {
@@ -37,6 +47,10 @@ const BlogView = () => {
       </div>
       <div>added by {blog.user.name}</div>
       <h3>comments</h3>
+      <form onSubmit={comment}>
+        <input name="comment" type="text" />
+        <button type="submit">add comment</button>
+      </form>
       <ul>
         {blog.comments.map((comment) => {
           return <li key={comment}>{comment}</li>;

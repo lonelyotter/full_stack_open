@@ -29,4 +29,11 @@ export const likeBlog = (id) => {
   };
 };
 
+export const addComment = (id, comment) => {
+  return async (dispatch, getState) => {
+    const returnedBlog = await blogService.addComment(id, comment);
+    dispatch(setBlogDetail(returnedBlog));
+  };
+};
+
 export default blogDetailSlice.reducer;
