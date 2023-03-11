@@ -9,7 +9,7 @@ interface Result {
 }
 
 interface ExerciseValues {
-  hours: number[];
+  daily_exercises: number[];
   target: number;
 }
 
@@ -20,7 +20,7 @@ const parseExercisesArguments = (args: string[]): ExerciseValues => {
     throw new Error("Provided values were not numbers!");
   }
 
-  const hours = args.slice(3).map((hour) => {
+  const daily_exercises = args.slice(3).map((hour) => {
     if (isNaN(Number(hour))) {
       throw new Error("Provided values were not numbers!");
     }
@@ -28,15 +28,18 @@ const parseExercisesArguments = (args: string[]): ExerciseValues => {
   });
 
   return {
-    hours,
+    daily_exercises,
     target: Number(args[2]),
   };
 };
 
-const calculateExercises = (hours: number[], target: number): Result => {
-  const days = hours.length;
-  const trainingDays = hours.filter((hour) => hour > 0).length;
-  const average = hours.reduce((a, b) => a + b, 0) / days;
+export const calculateExercises = (
+  daily_exercises: number[],
+  target: number
+): Result => {
+  const days = daily_exercises.length;
+  const trainingDays = daily_exercises.filter((hour) => hour > 0).length;
+  const average = daily_exercises.reduce((a, b) => a + b, 0) / days;
   const success = average >= target;
   const rating = success ? 3 : average >= target / 2 ? 2 : 1;
   const ratingDescription =
@@ -58,8 +61,8 @@ const calculateExercises = (hours: number[], target: number): Result => {
 };
 
 try {
-  const { hours, target } = parseExercisesArguments(process.argv);
-  console.log(calculateExercises(hours, target));
+  const { daily_exercises, target } = parseExercisesArguments(process.argv);
+  console.log(calculateExercises(daily_exercises, target));
 } catch (error: unknown) {
   let errorMessage = "Something bad happened.";
   if (error instanceof Error) {
