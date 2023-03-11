@@ -35,7 +35,7 @@ const Authors = (props) => {
         </tbody>
       </table>
 
-      <BirthyearForm authors={authors} />
+      {props.token && <BirthyearForm authors={authors} />}
     </div>
   );
 };
