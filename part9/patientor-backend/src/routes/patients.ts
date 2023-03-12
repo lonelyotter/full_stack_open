@@ -10,7 +10,6 @@ router.get("/", (_req, res) => {
 
 router.post("/", (req, res) => {
   try {
-    console.log(req.body);
     const newPatient = toNewPatient(req.body);
     const addedPatient = patientService.addPatient(newPatient);
     res.json(addedPatient);
