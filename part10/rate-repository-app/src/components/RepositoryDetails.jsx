@@ -1,13 +1,12 @@
 import { View, FlatList } from "react-native";
 import RepositoryItem from "./RepositoryItem";
 import Button from "./Button";
-import { useQuery } from "@apollo/client";
-import { GET_REPOSITORY } from "../graphql/queries";
 import { useParams } from "react-router-native";
 import { StyleSheet } from "react-native-web";
 import * as Linking from "expo-linking";
 import Text from "./Text";
 import theme from "../theme";
+import useRepositoryReviews from "../hooks/useRepositoryReviews";
 
 const styles = StyleSheet.create({
   container: {
@@ -81,16 +80,21 @@ const ReviewItem = ({ review }) => {
 const SingleRepository = () => {
   const id = useParams().id;
 
-  const { data } = useQuery(GET_REPOSITORY, {
-    variables: { repositoryId: id },
-    fetchPolicy: "cache-and-network",
+  const { repository, fetchMore } = useRepositoryReviews({
+    repositoryId: id,
+    first: 3,
   });
 
-  const repository = data ? data.repository : undefined;
+  const onEndReach = () => {
+    console.log("You have reached the end of the list");
+    fetchMore();
+  };
 
   if (!repository) {
     return null;
   }
+
+  console.log(repository);
 
   const reviews = repository.reviews.edges.map((edge) => edge.node);
 
@@ -106,6 +110,8 @@ const SingleRepository = () => {
         </View>
       )}
       ItemSeparatorComponent={ItemSeparator}
+      onEndReached={onEndReach}
+      onEndReachedThreshold={0.5}
     />
   );
 };

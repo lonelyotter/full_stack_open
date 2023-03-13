@@ -1,12 +1,11 @@
 import { FlatList, View, StyleSheet, Pressable } from "react-native";
 import RepositoryItem from "./RepositoryItem";
-import { useQuery } from "@apollo/client";
-import { GET_REPOSITORIES } from "../graphql/queries";
 import { useNavigate } from "react-router-native";
 import { useState } from "react";
 import { Picker } from "@react-native-picker/picker";
 import TextInput from "./TextInput";
 import { useDebounce } from "use-debounce";
+import useRepositories from "../hooks/useRepositories";
 
 const styles = StyleSheet.create({
   separator: {
@@ -43,16 +42,19 @@ const RepositoryList = () => {
     { orderBy: "RATING_AVERAGE", orderDirection: "ASC" },
   ];
 
-  const { data } = useQuery(GET_REPOSITORIES, {
-    variables: {
-      ...queryVariables[selectedSort],
-      searchKeyword: debouncedSearchKeyword,
-    },
-    fetchPolicy: "cache-and-network",
+  const { repositories, fetchMore } = useRepositories({
+    ...queryVariables[selectedSort],
+    searchKeyword: debouncedSearchKeyword,
+    first: 8,
   });
 
-  const repositoryNodes = data
-    ? data.repositories.edges.map((edge) => edge.node)
+  const onEndReach = () => {
+    console.log("You have reached the end of the list");
+    fetchMore();
+  };
+
+  const repositoryNodes = repositories
+    ? repositories.edges.map((edge) => edge.node)
     : [];
 
   return (
@@ -91,6 +93,8 @@ const RepositoryList = () => {
           <RepositoryItem repository={item} />
         </Pressable>
       )}
+      onEndReached={onEndReach}
+      onEndReachedThreshold={0.5}
     />
   );
 };
