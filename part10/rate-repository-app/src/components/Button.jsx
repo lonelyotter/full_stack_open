@@ -14,12 +14,15 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontWeight: "bold",
   },
+  error: {
+    backgroundColor: theme.colors.error,
+  },
 });
 
-const Button = ({ label, onPress }) => {
+const Button = ({ label, onPress, error }) => {
   return (
     <Pressable onPress={onPress}>
-      <View style={styles.button}>
+      <View style={[styles.button, error && styles.error]}>
         <Text style={styles.text}>{label}</Text>
       </View>
     </Pressable>
