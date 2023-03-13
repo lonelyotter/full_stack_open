@@ -42,6 +42,9 @@ const AppBar = () => {
           <AppBarLinkTab text="Create a review" link="/createReview" />
         )}
         {data && data.me && (
+          <AppBarLinkTab text="My reviews" link="/myReviews" />
+        )}
+        {data && data.me && (
           <AppBarEventTab text="Sign out" onPress={signOut} />
         )}
         {data && !data.me && <AppBarLinkTab text="Sign in" link="/signin" />}
