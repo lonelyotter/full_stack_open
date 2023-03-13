@@ -8,7 +8,6 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.primary,
     padding: 10,
     borderRadius: 5,
-    margin: 10,
   },
   text: {
     color: "white",
