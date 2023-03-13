@@ -13,6 +13,7 @@ const styles = StyleSheet.create({
   topContainer: {
     display: "flex",
     flexDirection: "row",
+    maxWidth: "90%",
   },
   bottomContainer: {
     display: "flex",
