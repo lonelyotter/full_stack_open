@@ -78,7 +78,7 @@ const Statistics = ({ label, value }) => {
 
 const RepositoryItem = ({ repository }) => {
   return (
-    <View style={styles.container}>
+    <View style={styles.container} testID="repositoryItem">
       <View style={styles.topContainer}>
         <Image
           style={styles.avatar}
