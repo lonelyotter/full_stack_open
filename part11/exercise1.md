@@ -1,3 +1,5 @@
+# Exercise 1
+
 For the hypothetical situation described, let us assume that the application is written in Java. Java is a popular programming language and has a thriving ecosystem with many tools available to handle continuous integration (CI) tasks.
 
 One of the popular tools for linting Java code is Checkstyle. It can be used to enforce a consistent coding style, detect common programming errors, and provide suggestions for improvement. For testing, JUnit is a widely used framework for unit testing in Java. Additionally, tools like Selenium and Cucumber can be used for automated testing of user interfaces and behavior-driven development (BDD), respectively. For building, Apache Maven is a popular tool that can handle dependencies, build the project, and create executable files.
