@@ -1,0 +1,79 @@
+➜  todo-backend git:(main) docker exec -it db250a bash 
+root@db250a0171d8:/# mongosh -u root -p example
+Current Mongosh Log ID: 6411e7faf2be3341cc8f6b96
+Connecting to:          mongodb://<credentials>@127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+1.8.0
+Using MongoDB:          6.0.4
+Using Mongosh:          1.8.0
+
+For mongosh info see: https://docs.mongodb.com/mongodb-shell/
+
+
+To help improve our products, anonymous usage data is collected and sent to MongoDB periodically (https://www.mongodb.com/legal/privacy-policy).
+You can opt-out by running the disableTelemetry() command.
+
+------
+   The server generated these startup warnings when booting
+   2023-03-15T15:40:49.256+00:00: vm.max_map_count is too low
+------
+
+------
+   Enable MongoDB's free cloud-based monitoring service, which will then receive and display
+   metrics about your deployment (disk utilization, CPU, operation statistics, etc).
+   
+   The monitoring data will be available on a MongoDB website with a unique URL accessible to you
+   and anyone you share the URL with. MongoDB may use this information to make product
+   improvements and to suggest MongoDB products and deployment options to you.
+   
+   To enable free monitoring, run the following command: db.enableFreeMonitoring()
+   To permanently disable this reminder, run the following command: db.disableFreeMonitoring()
+------
+
+test> show dbs
+admin         100.00 KiB
+config         92.00 KiB
+local          72.00 KiB
+the_database   56.00 KiB
+test> use the_database
+switched to db the_database
+the_database> show collections
+todos
+the_database> db.todos.find({})
+[
+  {
+    _id: ObjectId("6411e17c3b306f1ca17307d3"),
+    text: 'update todos',
+    done: false
+  },
+  {
+    _id: ObjectId("6411e17c3b306f1ca17307d4"),
+    text: 'Learn about containers',
+    done: false
+  }
+]
+the_database> db.todos.insertOne({text: "Increase the number of tools in my toolbelt", done: false})
+{
+  acknowledged: true,
+  insertedId: ObjectId("6411e908dffc201a0af57006")
+}
+the_database> db.todos.find({})
+[
+  {
+    _id: ObjectId("6411e17c3b306f1ca17307d3"),
+    text: 'update todos',
+    done: false
+  },
+  {
+    _id: ObjectId("6411e17c3b306f1ca17307d4"),
+    text: 'Learn about containers',
+    done: false
+  },
+  {
+    _id: ObjectId("6411e908dffc201a0af57006"),
+    text: 'Increase the number of tools in my toolbelt',
+    done: false
+  }
+]
+the_database> exit
+root@db250a0171d8:/# exit
+exit
+➜  todo-backend git:(main) 
