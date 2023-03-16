@@ -10,6 +10,7 @@ const blogsRouter = require("./controllers/blogs");
 const usersRouter = require("./controllers/users");
 const loginRouter = require("./controllers/login");
 const authorRouter = require("./controllers/authors");
+const ReadingListsRouter = require("./controllers/reading_lists");
 
 app.use(express.json());
 
@@ -31,6 +32,7 @@ app.use("/api/blogs", blogsRouter);
 app.use("/api/users", usersRouter);
 app.use("/api/login", loginRouter);
 app.use("/api/authors", authorRouter);
+app.use("/api/readinglists", ReadingListsRouter);
 
 const errorHandler = (error, req, res, next) => {
   console.error(error.message);

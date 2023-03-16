@@ -11,10 +11,26 @@ ReadingList.init(
       primaryKey: true,
       autoIncrement: true,
     },
-    name: {
-      type: DataTypes.STRING,
+    userId: {
+      type: DataTypes.INTEGER,
       allowNull: false,
-      unique: true,
+      references: {
+        model: "users",
+        key: "id",
+      },
+    },
+    blogId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: "blogs",
+        key: "id",
+      },
+    },
+    unread: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: true,
     },
   },
   {
