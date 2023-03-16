@@ -5,7 +5,7 @@ WORKDIR /usr/src/app
 COPY --chown=node:node . .
 RUN npm ci
 
-ENV DEBUG=todo-backend:*
+ENV DEBUG=playground:*
 
 USER node
 CMD npm start

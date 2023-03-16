@@ -1,4 +1,3 @@
-# The first FROM is now a stage called build-stage
 FROM node:16 AS build-stage
 WORKDIR /usr/src/app
 
@@ -9,7 +8,7 @@ RUN npm ci
 ENV CI=true 
 RUN npm test
 
-ENV REACT_APP_BACKEND_URL=http://localhost:3001
+ENV REACT_APP_BACKEND_URL=http://localhost:8080/api
 RUN npm run build
 
 # This is a new stage, everything before this is gone, except the files we want to COPY
